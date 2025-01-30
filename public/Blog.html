@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Blog</title>
+  <link rel="stylesheet" href="styles/main.css">
+
+
+</head>
+<body>
+<nav class="nav-container">
+  <a href="index.html"><button class="nav-button">Home    </button></a>
+  <a href="PreviousFixtures.html"><button class="nav-button">Results</button></a>
+  <a href="Blog.html"><button class="nav-button">Blog Posts</button></a>
+  <a href="NextFixture.html"><button class="nav-button">Fixtures</button></a>
+</nav>
+<style>
+  form {
+    background: #f9f9f9;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #34495e;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52,152,219,0.3);
+}
+
+select {
+    appearance: none;
+    background: white url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 0.8rem center/1.2em;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.1);
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+    display: inline-block;
+    margin-right: 1.5rem;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    form {
+        padding: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
+  .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+  .transfer-news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+  }
+
+  .news-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .news-card:hover {
+      transform: translateY(-5px);
+  }
+
+.news-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 8/8; /* Set preferred aspect ratio */
+    object-fit: contain;
+    border-bottom: 3px solid #eee;
+}
+
+  .news-card .content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .news-card .category {
+      font-size: 0.85rem;
+      color: #666;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+  }
+
+  .news-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 1rem;
+      line-height: 1.4;
+  }
+
+  .news-card h3 a {
+      color: #333;
+      text-decoration: none;
+  }
+
+  .news-card h3 a:hover {
+      color: #007bff;
+  }
+
+  .news-card p {
+      color: #666;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      flex: 1;
+  }
+
+  .news-card .read-more {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-block;
+  }
+
+  .news-card .read-more:hover {
+      text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+      .news-grid {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+      }
+
+      .news-card img {
+          height: 180px;
+      }
+  }
+  @media (max-width: 768px) {
+      .transfer-news-grid {
+          grid-template-columns: 1fr;
+          padding: 1rem;
+      }
+
+      .news-card img {
+          height: 180px;
+      }
+  }
+</style>
+<h2 style="text-align: center; padding: 1rem 0; color: #3D5A80; font-size : 200%; font-weight : bold ; ">Top News </h2>
+<div class="news-grid" id="news-container">
+  <!-- Loading skeleton -->
+  <div class="loading" style="text-align: center; padding: 2rem;">
+    Loading latest news...
+  </div>
+
+</div>
+<div class="container">
+  <section class="transfer-news-section">
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+      <h2 style="
+        text-align: center;
+        padding: 1.5rem 3rem;
+        color: #3D5A80;
+        font-size: 250%;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #E0FBFC, #98C1D9);
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(61, 90, 128, 0.4);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        display: inline-block;
+    ">
+        Transfer Hub
+      </h2>
+    </div>
+
+
+    <div class="transfer-news-grid">
+      <!-- Transfer news cards will be dynamically inserted here -->
+    </div>
+  </section>
+
+  <h2>Contact us to share your Stories</h2>
+  <form action="submit-form.html" method="post">
+    <!-- Full Name -->
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+    </div>
+
+    <!-- Favorite Team -->
+    <div class="form-group">
+      <label for="team">Favorite Football Team</label>
+      <select id="team" name="team">
+        <option value="">Select a team</option>
+        <option value="manchester_united">Manchester United</option>
+        <option value="liverpool">Liverpool</option>
+        <option value="chelsea">Chelsea</option>
+        <option value="arsenal">Arsenal</option>
+        <option value="barcelona">Barcelona</option>
+        <option value="real_madrid">Real Madrid</option>
+      </select>
+    </div>
+
+    <!-- Radio Buttons: Type of Inquiry -->
+    <div class="form-group">
+      <label>Type of Inquiry</label>
+      <input type="radio" id="feedback" name="inquiry_type" value="feedback" required>
+      <label for="feedback">Feedback</label><br>
+      <input type="radio" id="suggestion" name="inquiry_type" value="suggestion">
+      <label for="suggestion">Suggestion</label><br>
+      <input type="radio" id="other" name="inquiry_type" value="other">
+      <label for="other">Other</label>
+    </div>
+
+    <!-- Checkbox: Subscription -->
+    <div class="form-group">
+      <label>Newsletter Subscription</label>
+      <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+      <label for="subscribe">Subscribe to our newsletter</label>
+    </div>
+
+    <!-- Textarea -->
+    <div class="form-group">
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit">Submit</button>
+    </div>
+
+
+  </form>
+  <script>
+    // NewsAPI Configuration
+    const NEWS_API_KEY = '9b067c138b1b409892789a6c9179ca50';
+    const API_URL = `https://newsapi.org/v2/everything?q=english premier league&sortBy=publishedAt&language=en&pageSize=12&apiKey=${NEWS_API_KEY}`;
+
+    // Fetch and display news
+    async function fetchNews() {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+
+        const newsContainer = document.getElementById('news-container');
+        newsContainer.innerHTML = ''; // Clear loading state
+
+        data.articles.forEach(article => {
+          const newsCard = `
+            <article class="news-card">
+              <a href="${article.url}" target="_blank" rel="noopener">
+                <img src="${article.urlToImage || 'placeholder-image.jpg'}"
+                     alt="${article.title}"
+                     onerror="this.src='pl.jpg'">
+              </a>
+              <div class="content">
+                <span class="category">${article.source.name} • ${formatTimeAgo(article.publishedAt)}</span>
+                <h3><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a></h3>
+                <p>${article.description || ''}</p>
+                <a href="${article.url}" target="_blank" rel="noopener">Read More →</a>
+              </div>
+            </article>
+          `;
+          newsContainer.insertAdjacentHTML('beforeend', newsCard);
+        });
+
+      } catch (error) {
+        console.error('News fetch error:', error);
+        document.getElementById('news-container').innerHTML = `
+          <div class="error" style="text-align: center; color: #e74c3c; padding: 2rem;">
+            Failed to load latest news. Please try again later.
+          </div>
+        `;
+      }
+    }
+
+    // Helper function to format time
+    function formatTimeAgo(publishedAt) {
+      const date = new Date(publishedAt);
+      const now = new Date();
+      const diffHours = Math.round((now - date) / (1000 * 60 * 60));
+
+      if (diffHours < 24) return `${diffHours}h ago`;
+      return `${Math.floor(diffHours/24)}d ago`;
+    }
+
+    // Load news when page loads
+    document.addEventListener('DOMContentLoaded', fetchNews);
+  </script>
+  <script>
+    // NewsAPI Configuration
+const TRANSFER_NEWS_API_KEY = '9b067c138b1b409892789a6c9179ca50';
+const TRANSFER_NEWS_API_URL = `https://newsapi.org/v2/everything?q=soccer transfer&sortBy=publishedAt&language=en&pageSize=10&apiKey=${NEWS_API_KEY}`;
+
+// Fetch and display transfer news
+async function fetchTransferNews() {
+  try {
+    console.log('Fetching transfer news...'); // Debug log
+    const response = await fetch(TRANSFER_NEWS_API_URL);
+    console.log('API Response:', response); // Debug log
+
+    const data = await response.json();
+    console.log('API Data:', data); // Debug log
+
+    if (data.status === 'ok' && data.articles.length > 0) {
+      const transferNewsContainer = document.querySelector('.transfer-news-grid');
+
+      // Clear existing news cards
+      transferNewsContainer.innerHTML = '';
+
+      // Add up to 3 transfer news articles
+      const articlesToShow = data.articles.slice(0, 9); // Ensure only 3 articles are shown
+      articlesToShow.forEach(article => {
+        const newsCard = `
+          <article class="news-card">
+            <a href="${article.url}" target="_blank" rel="noopener">
+              <img src="${article.urlToImage || 'placeholder-image.jpg'}"
+                   alt="${article.title}"
+                   onerror="this.src='pl.jpg'">
+            </a>
+            <div class="content">
+              <span class="category">${article.source.name} • ${formatTimeAgo(article.publishedAt)}</span>
+              <h3><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a></h3>
+              <p>${article.description || ''}</p>
+              <a href="${article.url}" target="_blank" rel="noopener" class="read-more">Read More →</a>
+            </div>
+          </article>
+        `;
+        transferNewsContainer.insertAdjacentHTML('beforeend', newsCard);
+      });
+
+      // If fewer than 3 articles, show a fallback message
+      if (articlesToShow.length < 3) {
+        const fallbackCard = `
+          <article class="news-card">
+            <div class="content">
+              <h3>No additional transfer news available.</h3>
+              <p>Check back later for more updates.</p>
+            </div>
+          </article>
+        `;
+        transferNewsContainer.insertAdjacentHTML('beforeend', fallbackCard);
+      }
+    } else {
+      console.error('No transfer news articles found.');
+    }
+  } catch (error) {
+    console.error('Error fetching transfer news:', error);
+  }
+}
+
+// Helper function to format time
+function formatTimeAgo(publishedAt) {
+  const date = new Date(publishedAt);
+  const now = new Date();
+  const diffHours = Math.round((now - date) / (1000 * 60 * 60));
+
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${Math.floor(diffHours / 24)}d ago`;
+}
+
+// Load transfer news when page loads
+document.addEventListener('DOMContentLoaded', fetchTransferNews);
+  </script>
+
+</div>
+<p class="api-link">
+  Created By <a href="https://www.instagram.com/snehhjamez/" >SNEHH-FOOTBALL</a>.
+</p>
+
+</body>
+</html>

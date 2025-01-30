@@ -1,0 +1,193 @@
+/* External CSS (Requirement 8) */
+body {
+    font-family: 'Times New Roman','Poppins';
+    margin: 20px;
+    background-image: url('background.jpg');
+    /* Adjust the background behavior */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+h1 {
+  text-align: center; /* Horizontally centers the text */
+  position: absolute; /* Enables positioning */
+   /* Moves the heading to the middle of the viewport */
+  left: 50%; /* Horizontally aligns to the center */
+  transform: translate(-50%, -50%); /* Adjusts for the heading's size */
+  color: black; /* Optional: Makes the text stand out against the background */
+  font-size: 3rem; /* Optional: Adjust the size of the text */
+}
+
+.breaking-news-container {
+    position: ;
+    top: 7;
+    width: 90%;
+    background-color: white;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.breaking-news {
+    color: black;
+    font-weight: bold;
+    padding: 10px 0;
+    white-space: nowrap;
+    animation: slide-in 10s linear infinite;
+}
+
+@keyframes slide-in {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Center the entire news section */
+.news-section {
+  max-width: 1200px; /* Adjust as needed */
+  margin: 0 auto; /* Center horizontally */
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.news-section h2 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Grid layout for cards */
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center; /* Center cards if they don't fill the row */
+}
+.transfer-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center; /* Center cards if they don't fill the row */
+}
+
+/* News card styling */
+.news-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  width: 100%; /* Ensures cards don't stretch beyond grid limits */
+  max-width: 350px; /* Set max-width for smaller cards */
+  margin: 0 auto; /* Center cards within grid cells */
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+}
+
+.news-card img {
+  width: 100%;
+  aspect-ratio: 16/18; /* Adjust to match your image ratios (e.g., 4/3, 1/1) */
+  object-fit: cover; /* Optional: use "contain" to avoid cropping */
+  height: auto;
+}
+.news-card .content {
+  padding: 16px;
+  text-align: left;
+}
+.nav-container {
+    margin-bottom: 50px;
+    text-align: center;
+}
+.nav-button:hover {
+    background: linear-gradient(135deg, #1976D2, #3D5A80);
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2), 0 0 15px rgba(25, 118, 210, 0.5); /* Add glowing effect */
+}
+.nav-button {
+    background: linear-gradient(135deg, #3D5A80, #1976D2); /* Gradient Blue */
+    color: white;
+    padding: 12px 24px; /* Slightly larger for modern feel */
+    border: none;
+    border-radius: 25px; /* Fully rounded for modern look */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    font-size: 16px; /* Slightly larger for readability */
+    font-weight: bold; /* Bold text for prominence */
+    letter-spacing: 0.5px; /* Subtle spacing for modern typography */
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+
+.nav-button:hover {
+    background: linear-gradient(135deg, #1976D2, #3D5A80); /* Reverse gradient on hover */
+    transform: translateY(-3px); /* Slight upward movement for hover effect */
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+}
+
+
+.news-card .category {
+  color: #007BFF;
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.news-card h3 {
+  margin: 8px 0;
+  font-size: 1.2em;
+}
+
+.news-card .read-more {
+  display: inline-block;
+  margin-top: 12px;
+  color: #007BFF;
+  text-decoration: none;
+}
+
+
+.featured-article {
+  grid-column: 1 / -1; /* Span full width */
+}
+
+
+.section {
+    background-color:#E0FBFC;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+table tr:hover {
+    background-color: #F1F5F9; /* Light background on hover */
+    cursor: pointer; /* Indicates interactivity */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #3D5A80;
+    color: white;
+}
+
+.responsive-img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+

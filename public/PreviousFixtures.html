@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transfer Center | Soccer Analytics</title>
+  <link rel="stylesheet" href="styles/main.css">
+
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<nav class="nav-container">
+  <a href="index.html"><button class="nav-button">Home    </button></a>
+  <a href="PreviousFixtures.html"><button class="nav-button">Results</button></a>
+  <a href="Blog.html"><button class="nav-button">Blog Posts</button></a>
+  <a href="NextFixture.html"><button class="nav-button">Fixtures</button></a>
+</nav>
+<div class="table-container">
+  <h2 style="text-align: center; color: #3D5A80; text-font: 200% ;">Match Results</h2>
+  <div id="loading" class="loading">Loading Results</div>
+  <table id="fixtures-table" style="display: none;">
+    <thead>
+    <tr>
+      <th>Date</th>
+      <th>Home Team</th>
+      <th>Away Team</th>
+      <th>Score</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+  </table
+>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    fetch('http://localhost:3000/api/fixtures/previous')
+      .then(response => response.json())
+      .then(groups => {
+        const container = document.querySelector('.table-container');
+        const loadingDiv = document.getElementById('loading');
+
+        loadingDiv.style.display = 'none';
+
+        groups.forEach(group => {
+          // Create a section for each matchday
+          const section = document.createElement('div');
+          section.innerHTML = `
+            <h3 style="color: #3D5A80; margin-top: 2rem;">Matchday ${group.matchday}</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Home Team</th>
+                  <th>Away Team</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${group.matches.map(match => `
+                  <tr>
+                    <td>${new Date(match.utcDate).toLocaleDateString('en-GB')}</td>
+                    <td>${match.homeTeam?.name || 'TBD'}</td> <!-- Handle missing homeTeam -->
+                    <td>${match.awayTeam?.name || 'TBD'}</td> <!-- Handle missing awayTeam -->
+                    <td>${match.score?.fullTime?.home ?? '-'} - ${match.score?.fullTime?.away ?? '-'}</td> <!-- Handle missing score -->
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+          container.appendChild(section);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('loading').textContent = 'Failed to load matches.';
+      });
+  });
+</script>
+<p class="api-link">
+  Created By <a href="https://www.instagram.com/snehhjamez/" >SNEHH-FOOTBALL</a>.
+</p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premier League Hub</title>
+
+  <!-- External CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+
+  <!-- Internal CSS -->
+  <style>
+
+
+    .loading {
+        text-align: center;
+        padding: 2rem;
+        font-size: 1.5rem;
+        color: #6200ea;
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation with Buttons-->
+<nav class="nav-container">
+  <a href="index.html"><button class="nav-button">Home    </button></a>
+  <a href="PreviousFixtures.html"><button class="nav-button">Results</button></a>
+  <a href="Blog.html"><button class="nav-button">Blog Posts</button></a>
+  <a href="NextFixture.html"><button class="nav-button">Fixtures</button></a>
+</nav>
+<div class="breaking-news-container">
+  <div class="breaking-news" style="font-size : 150%;">
+    BREAKING NEWS: Major updates on today's top stories!
+  </div>
+</div>
+<h2>             .</h2>
+<section class="news-section">
+  <div class="news-grid">
+    <!-- News cards will be dynamically inserted here -->
+  </div>
+</section>
+
+
+<div class="table-container">
+  <h2 style="text-align: center; padding: 1rem 0; color: #3D5A80; font-size : 200%; font-weight : bold ; ">Premier League Standings</h2>
+  <div id="loading" class="loading">Loading standings...</div>
+  <table id="standings-table" style="display: none;">
+    <thead>
+    <tr>
+      <th>Position</th>
+      <th>Team</th>
+      <th>Played</th>
+      <th>Points</th>
+      <th>Goal Difference</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Dynamic rows will be inserted here -->
+    </tbody>
+  </table>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  fetch('http://localhost:3000/api/standings') // Use full URL to your server
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector('#standings-table tbody');
+      const loadingDiv = document.getElementById('loading');
+      const table = document.getElementById('standings-table');
+
+      loadingDiv.style.display = 'none'; // Hide loading text
+      table.style.display = 'table'; // Show the table
+
+      tbody.innerHTML = ''; // Clear existing rows
+
+      data.forEach(team => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${team.position}</td>
+          <td>${team.team.name}</td>
+          <td>${team.playedGames}</td>
+          <td>${team.points}</td>
+          <td>${team.goalDifference}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      document.getElementById('loading').textContent = 'Failed to load standings.';
+    });
+});
+
+</script>
+<script>
+  // NewsAPI Configuration
+const NEWS_API_KEY = '9b067c138b1b409892789a6c9179ca50';
+const NEWS_API_URL = `https://newsapi.org/v2/everything?q=english premier league&sortBy=publishedAt&language=en&pageSize=5&apiKey=${NEWS_API_KEY}`;
+
+// Fetch and display breaking news
+async function fetchBreakingNews() {
+  try {
+    const response = await fetch(NEWS_API_URL);
+    const data = await response.json();
+
+    if (data.status === 'ok' && data.articles.length > 0) {
+      const breakingNewsContainer = document.querySelector('.breaking-news');
+      const newsGrid = document.querySelector('.news-grid');
+
+      // Update breaking news banner
+      breakingNewsContainer.textContent = `BREAKING NEWS: ${data.articles[0].title}`;
+
+      // Clear existing news cards
+      newsGrid.innerHTML = '';
+
+      // Add top 3 news articles
+      data.articles.forEach(article => {
+        const newsCard = `
+          <article class="news-card">
+            <a href="${article.url}" target="_blank" rel="noopener">
+              <img src="${article.urlToImage || 'placeholder-image.jpg'}"
+                   alt="${article.title}"
+                   onerror="this.src='pl.jpg'">
+            </a>
+            <div class="content">
+              <span class="category">${article.source.name} • ${formatTimeAgo(article.publishedAt)}</span>
+              <h3><a href="${article.url}" target="_blank" rel="noopener">${article.title}</a></h3>
+              <p>${article.description || ''}</p>
+              <a href="${article.url}" target="_blank" rel="noopener" class="read-more">Read More →</a>
+            </div>
+          </article>
+        `;
+        newsGrid.insertAdjacentHTML('beforeend', newsCard);
+      });
+    } else {
+      console.error('No news articles found.');
+    }
+  } catch (error) {
+    console.error('Error fetching breaking news:', error);
+  }
+}
+
+// Helper function to format time
+function formatTimeAgo(publishedAt) {
+  const date = new Date(publishedAt);
+  const now = new Date();
+  const diffHours = Math.round((now - date) / (1000 * 60 * 60));
+
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${Math.floor(diffHours / 24)}d ago`;
+}
+
+// Load breaking news when page loads
+document.addEventListener('DOMContentLoaded', fetchBreakingNews);
+</script>
+
+
+</body>
+</html>
